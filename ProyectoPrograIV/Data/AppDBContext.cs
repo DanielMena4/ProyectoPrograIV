@@ -8,6 +8,24 @@ namespace ProyectoPrograIV.Data
     {
         public AppDBContext(DbContextOptions options) : base(options)
         { 
+
+        }
+        public DbSet<Friendship> Friendships { get; set; }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Friendship>()
+                .HasOne(f => f.User)
+                .WithMany(u => u.Friends)
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Friendship>()
+                .HasOne(f => f.Friend)
+                .WithMany(u => u.FriendOf)
+                .HasForeignKey(f => f.FriendId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

@@ -1,0 +1,36 @@
+﻿@using ProyectoPrograIV.ViewModels;
+@model ProfileViewModel;
+
+@{
+	ViewData["Title"] = "Perfil";
+	Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+<div class="account-container">
+	<div class="account-box">
+		<h2 class="text-center mb-4">Perfil</h2>
+		<form asp-action="Login" method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="mb-3">
+				<label asp-for="UserName" class="form-label"></label>
+				<input asp-for="UserName" class="form-control" readonly/>
+				<span asp-validation-for="UserName" class="text-danger"></span>
+			</div>
+			<div class="mb-3">
+				<h3>Lista de Amigos</h3>
+				<ul>
+					@foreach (var friend in Model.FriendList)
+					{
+						<li>@friend.UserName (@friend.UserName)</li>
+					}
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");
+	}
+}
