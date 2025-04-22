@@ -26,7 +26,9 @@ namespace ProyectoPrograIV.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, lockoutOnFailure: false);
+                var user = await _userManager.FindByEmailAsync(model.Email);
+
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded) 
                 {
                     return RedirectToAction("Index", "Home");
@@ -76,31 +78,31 @@ namespace ProyectoPrograIV.Controllers
         [HttpPost]
         public async Task<IActionResult> VerifyEmail(VerifyEmailViewModel model)
         {
-            if (ModelState.IsValid) 
+            if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 if (user == null)
                 {
-                    ModelState.AddModelError("", "Algo salio mal");
+                    ModelState.AddModelError("", "No se ha encontrado un usuario con ese email.");
                     return View(model);
                 }
                 else
                 {
-                    return RedirectToAction("ChangePassword", "Account", new {username = user.UserName});
+                    return RedirectToAction("ChangePassword", "Account", new { email = user.Email });
                 }
             }
             return View(model);
         }
-        public IActionResult ChangePassword(string username)
+        public IActionResult ChangePassword(string email)
         {
-            if (string.IsNullOrEmpty(username)) 
+            if (string.IsNullOrEmpty(email)) 
             {
                 return RedirectToAction("VerifyEmail", "Account");
             }
-            return View(new ChangePasswordViewModel { Email = username });
+            return View(new ChangePasswordViewModel { Email = email });
         }
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model) 
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -111,30 +113,29 @@ namespace ProyectoPrograIV.Controllers
                     if (result.Succeeded)
                     {
                         result = await _userManager.AddPasswordAsync(user, model.NewPassword);
-                        return RedirectToAction("Login", "Account");
+                        if (result.Succeeded)
+                        {
+                            return RedirectToAction("Login", "Account");
+                        }
+                        else
+                        {
+                            foreach (var error in result.Errors)
+                            {
+                                ModelState.AddModelError("", error.Description);
+                            }
+                        }
                     }
                     else
                     {
-                        foreach (var error in result.Errors)
-                        {
-                            ModelState.AddModelError("", error.Description);
-                        }
-                        return View(model);
+                        ModelState.AddModelError("", "Hubo un problema al eliminar la contraseña actual.");
                     }
-
                 }
                 else
                 {
-                    ModelState.AddModelError("", "No se encontró el usuario");
-                    return View(model);
+                    ModelState.AddModelError("", "No se encontró el usuario.");
                 }
             }
-            else 
-            {
-                ModelState.AddModelError("", "Algo salio mal");
-                return View(model);
-            }
-            
+            return View(model);
         }
         public async Task<IActionResult> Logout()
         {

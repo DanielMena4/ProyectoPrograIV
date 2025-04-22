@@ -13,23 +13,25 @@ namespace ProyectoPrograIV.Controllers
         private readonly UserManager<Users> _userManager;
         private readonly AppDBContext _context;
 
-        public SocialController(SignInManager<Users> signInManager, UserManager<Users> userManager)
+        public SocialController(SignInManager<Users> signInManager, UserManager<Users> userManager, AppDBContext context)
         {
             this._signInManager = signInManager;
             this._userManager = userManager;
+            this._context = context;
         }
         public async Task<IActionResult> ProfileAsync()
         {
 
             var currentUser = await _userManager.GetUserAsync(User);
 
-            var friendList = _context.Friendships
+            var friendList = await _context.Friendships
             .Where(f => f.UserId == currentUser.Id)
+            .Include(f => f.Friend)
             .Select(f => new FriendViewModel
             {
                 UserName = f.Friend.UserName,
             })
-                .ToList();
+            .ToListAsync();
 
             var viewModel = new ProfileViewModel
             {
@@ -37,21 +39,33 @@ namespace ProyectoPrograIV.Controllers
                 FriendList = friendList
             };
 
-            return View();
+            return View(viewModel);
         }
 
         [HttpPost]
         public async Task<IActionResult> AddFriend(string friendUsername)
         {
             var currentUser = await _userManager.GetUserAsync(User);
-            var friendUser = await _userManager.FindByEmailAsync(friendUsername);
+            var friendUser = await _userManager.FindByNameAsync(friendUsername);
 
-            if (friendUser != null && currentUser.Id != friendUser.Id)
+            if (friendUser == null)
+            {
+                TempData["FriendMessage"] = "El usuario no fue encontrado.";
+            }
+            else if (currentUser.Id == friendUser.Id)
+            {
+                TempData["FriendMessage"] = "No puedes agregarte a ti mismo.";
+            }
+            else
             {
                 var exists = _context.Friendships.Any(f =>
                     f.UserId == currentUser.Id && f.FriendId == friendUser.Id);
 
-                if (!exists)
+                if (exists)
+                {
+                    TempData["FriendMessage"] = "Ya tienes a este usuario como amigo.";
+                }
+                else
                 {
                     _context.Friendships.Add(new Friendship
                     {
@@ -59,6 +73,7 @@ namespace ProyectoPrograIV.Controllers
                         FriendId = friendUser.Id
                     });
                     await _context.SaveChangesAsync();
+                    TempData["FriendMessage"] = "Amigo agregado exitosamente.";
                 }
             }
 
