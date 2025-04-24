@@ -10,6 +10,8 @@ namespace ProyectoPrograIV.Data
         { 
 
         }
+        public DbSet<Monster> Monsters { get; set; }
+        public DbSet<Team> Teams { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {

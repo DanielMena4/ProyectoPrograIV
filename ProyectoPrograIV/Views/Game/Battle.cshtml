@@ -1,0 +1,41 @@
+﻿@model ProyectoPrograIV.Models.Team
+
+@{
+    ViewData["Title"] = "Batalla";
+    Layout = "~/Views/Shared/_SignedInLayout.cshtml";
+}
+
+<div class="battle-container">
+    <h2 class="text-center">¡Comienza la Batalla!</h2>
+
+    @if (Model.Monsters != null && Model.Monsters.Count > 0)
+    {
+        <div class="monster-display" id="monsterDisplay" style="background-image: url('@Model.Monsters[0].Sprite');">
+            <div class="monster-image">
+                <img src="@Model.Monsters[0].Sprite" alt="@Model.Monsters[0].MonsterName" class="img-fluid" />
+            </div>
+        </div>
+
+        <div class="monster-buttons mt-4 text-center">
+            @foreach (var monster in Model.Monsters.Skip(1)) // Saltamos el primer monstruo porque ya se está mostrando
+            {
+                <button class="btn btn-outline-primary monster-button" onclick="changeMonster('@monster.Sprite', '@monster.MonsterName')">
+                    <img src="@monster.Sprite" alt="@monster.MonsterName" class="img-thumbnail" width="50" />
+                </button>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No hay monstruos para mostrar.</p>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function changeMonster(spriteUrl, monsterName) {
+            document.getElementById('monsterDisplay').style.backgroundImage = "url('" + spriteUrl + "')";
+            document.querySelector('.monster-image img').src = spriteUrl;
+        }
+    </script>
+}
