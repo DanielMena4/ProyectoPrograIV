@@ -5,37 +5,39 @@
     Layout = "~/Views/Shared/_SignedInLayout.cshtml";
 }
 
-<div class="battle-container">
-    <h2 class="text-center">¡Comienza la Batalla!</h2>
-
-    @if (Model.Monsters != null && Model.Monsters.Count > 0)
-    {
-        <div class="monster-display" id="monsterDisplay" style="background-image: url('@Model.Monsters[0].Sprite');">
-            <div class="monster-image">
-                <img src="@Model.Monsters[0].Sprite" alt="@Model.Monsters[0].MonsterName" class="img-fluid" />
+<div class="account-container">
+    <div class="account-box">
+        <h2 class="text-center mb-4">¡Es hora de la Batalla!</h2>
+        <div class="battle-container">
+            <div class="monster-background">
+                <div class="monster-display" style="background-image: url('@Model.Monsters[0].Sprite');">
+                    <div class="monster-image">
+                        <img src="@Model.Monsters[0].Sprite" alt="@Model.Monsters[0].MonsterName" />
+                    </div>
+                </div>
             </div>
+
+            <h3>@Model.Monsters[0].MonsterName</h3>
         </div>
 
-        <div class="monster-buttons mt-4 text-center">
-            @foreach (var monster in Model.Monsters.Skip(1)) // Saltamos el primer monstruo porque ya se está mostrando
+        <div class="monster-buttons">
+            @foreach (var monster in Model.Monsters)
             {
-                <button class="btn btn-outline-primary monster-button" onclick="changeMonster('@monster.Sprite', '@monster.MonsterName')">
-                    <img src="@monster.Sprite" alt="@monster.MonsterName" class="img-thumbnail" width="50" />
-                </button>
+                if (Model.Monsters[0] != monster)
+                {
+                    <button class="monster-button" onclick="changeMonster('@monster.MonsterName', '@monster.Sprite')">
+                        <img src="@monster.Sprite" alt="@monster.MonsterName" class="img-thumbnail" width="50" height="50">
+                    </button>
+                }
             }
         </div>
-    }
-    else
-    {
-        <p>No hay monstruos para mostrar.</p>
-    }
+    </div>
 </div>
 
-@section Scripts {
-    <script>
-        function changeMonster(spriteUrl, monsterName) {
-            document.getElementById('monsterDisplay').style.backgroundImage = "url('" + spriteUrl + "')";
-            document.querySelector('.monster-image img').src = spriteUrl;
-        }
-    </script>
-}
+<script>
+    function changeMonster(name, sprite) {
+        document.querySelector('.monster-display').style.backgroundImage = 'url(' + sprite + ')';
+        document.querySelector('.monster-image img').src = sprite;
+        document.querySelector('h3').innerText = name;
+    }
+</script>

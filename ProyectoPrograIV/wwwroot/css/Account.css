@@ -5,10 +5,11 @@
     background-repeat: repeat-y;
     display: flex;
     justify-content: center;
-    align-items:center;
-    min-height:100vh;
-    padding:2rem 0;
+    align-items: center;
+    min-height: 100vh;
+    padding: 2rem 0;
 }
+
 .account-box {
     background-color: #ffffff;
     padding: 30px;
@@ -18,9 +19,24 @@
     width: 100%;
     opacity: 0.9;
 }
+
 .battle-container {
     text-align: center;
     margin-top: 20px;
+}
+
+.monster-background {
+    background-image: url('../imagenes/BattleBG.jpeg');
+    background-size: cover;
+    background-position: center;
+    padding: 30px;
+    border-radius: 10px;
+    position: relative;
+    width: 100%;
+    height: 300px; /* Ajusta la altura de la zona de batalla */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .monster-display {
