@@ -33,7 +33,7 @@
     border-radius: 10px;
     position: relative;
     width: 100%;
-    height: 300px; /* Ajusta la altura de la zona de batalla */
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,16 +56,176 @@
     object-fit: cover;
     border-radius: 8px;
 }
-
-.monster-buttons button {
+.monster-button {
+    border: none;
+    background: transparent;
     margin: 5px;
-    padding: 10px;
-    border-radius: 5px;
-    background-color: transparent;
-    border: 1px solid #ccc;
+    padding: 5px;
     cursor: pointer;
+    transition: opacity 0.3s ease;
 }
 
-    .monster-buttons button:hover {
-        background-color: #f0f0f0;
+    .monster-button:disabled {
+        cursor: default;
+        opacity: 0.5;
+    }
+
+    .monster-button.active-monster {
+        border: 2px solid #333;
+        opacity: 0.6;
+    }
+
+.attack-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.attack-btn-container {
+    position: relative;
+}
+
+.attack-btn {
+    padding: 10px 15px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+    .attack-btn:hover {
+        background-color: #e6b800;
+    }
+
+.move-tooltip {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    width: 100px;
+    text-align: center;
+}
+
+.attack-btn:hover .move-tooltip {
+    display: block;
+}
+
+
+    .attack-btn:hover .move-tooltip {
+        display: block;
+    }
+
+    .attack-btn.normal {
+        background-color: #A8A77A;
+    }
+
+    .attack-btn.fuego {
+        background-color: #EE8130;
+    }
+
+    .attack-btn.agua {
+        background-color: #6390F0;
+    }
+
+    .attack-btn.hielo {
+        background-color: #96D9D6;
+    }
+
+    .attack-btn.electrico {
+        background-color: #F7D02C;
+    }
+
+    .attack-btn.dragon {
+        background-color: #6F35FC;
+    }
+
+    .attack-btn.psiquico {
+        background-color: #F95587;
+    }
+
+    .attack-btn.siniestro {
+        background-color: #705746;
+    }
+
+    .attack-btn.volador {
+        background-color: #A98FF3;
+    }
+
+    .attack-btn.fantasma {
+        background-color: #735797;
+    }
+
+    .attack-btn.lucha {
+        background-color: #C22E28;
+    }
+
+    .attack-btn.roca {
+        background-color: #B6A136;
+    }
+
+    .attack-btn.tierra {
+        background-color: #E2BF65;
+    }
+
+    .attack-btn.normal:hover {
+        background-color: #92916D;
+    }
+
+    .attack-btn.fuego:hover {
+        background-color: #d46f1f;
+    }
+
+    .attack-btn.agua:hover {
+        background-color: #527adc;
+    }
+
+    .attack-btn.hielo:hover {
+        background-color: #80c5c2;
+    }
+
+    .attack-btn.electrico:hover {
+        background-color: #e1bb24;
+    }
+
+    .attack-btn.dragon:hover {
+        background-color: #5e29d6;
+    }
+
+    .attack-btn.psiquico:hover {
+        background-color: #df4a75;
+    }
+
+    .attack-btn.siniestro:hover {
+        background-color: #5d483a;
+    }
+
+    .attack-btn.volador:hover {
+        background-color: #9175d6;
+    }
+
+    .attack-btn.fantasma:hover {
+        background-color: #624b7e;
+    }
+
+    .attack-btn.lucha:hover {
+        background-color: #a62321;
+    }
+
+    .attack-btn.roca:hover {
+        background-color: #9f902e;
+    }
+
+    .attack-btn.tierra:hover {
+        background-color: #ccb35a;
     }

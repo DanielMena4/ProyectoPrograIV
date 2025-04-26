@@ -30,5 +30,7 @@ namespace ProyectoPrograIV.Models
         [Display(Name = "Vida Actual")]
         public int MonsterCurrentHealth { get; set; }
         public string? Sprite { get; set; }
+
+        public ICollection<Move> Moves { get; set; } = new List<Move>();
     }
 }

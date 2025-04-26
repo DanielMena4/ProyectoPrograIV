@@ -1,43 +1,62 @@
 ﻿@model ProyectoPrograIV.Models.Team
+@using Newtonsoft.Json;
 
 @{
     ViewData["Title"] = "Batalla";
     Layout = "~/Views/Shared/_SignedInLayout.cshtml";
+    var activeName = ViewData["ActiveMonsterName"]?.ToString();
+    var mainMonster = Model.Monsters.FirstOrDefault(m => m.MonsterName == activeName) ?? Model.Monsters[0];
 }
 
 <div class="account-container">
     <div class="account-box">
-        <h2 class="text-center mb-4">¡Es hora de la Batalla!</h2>
         <div class="battle-container">
             <div class="monster-background">
-                <div class="monster-display" style="background-image: url('@Model.Monsters[0].Sprite');">
+                <div class="monster-display" style="background-image: url('@mainMonster.Sprite');">
                     <div class="monster-image">
-                        <img src="@Model.Monsters[0].Sprite" alt="@Model.Monsters[0].MonsterName" />
+                        <img src="@mainMonster.Sprite" alt="@mainMonster.MonsterName" />
                     </div>
                 </div>
             </div>
 
-            <h3>@Model.Monsters[0].MonsterName</h3>
+            <h3 id="monster-name">@mainMonster.MonsterName</h3>
+
+            <div id="attack-buttons" class="attack-buttons">
+                @foreach (var move in mainMonster.Moves)
+                {
+                    <div class="attack-btn @move.Type.ToLower()">
+                        @move.Name
+                        <div class="move-tooltip">
+                            <strong>Tipo:</strong> @move.Type <br />
+                            <strong>Clase:</strong> @move.Class <br />
+                            <strong>Poder:</strong> @move.Power <br />
+                            <strong>Prioridad:</strong> @move.Priority
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
+
+        <hr />
 
         <div class="monster-buttons">
             @foreach (var monster in Model.Monsters)
             {
-                if (Model.Monsters[0] != monster)
+                var isActive = monster.MonsterName == mainMonster.MonsterName;
+                var buttonClass = "monster-button"; 
+                var onClick = $"location.href='{Url.Action("ChangeMonster", "Game", new { monsterName = monster.MonsterName })}'"; // Siempre habilitamos el clic
+
+                if (isActive)
                 {
-                    <button class="monster-button" onclick="changeMonster('@monster.MonsterName', '@monster.Sprite')">
-                        <img src="@monster.Sprite" alt="@monster.MonsterName" class="img-thumbnail" width="50" height="50">
-                    </button>
+                    onClick = "javascript:void(0);";
+                    buttonClass += " disabled"; 
                 }
+
+                <button class="@buttonClass" onclick="@onClick">
+                    <img src="@monster.Sprite" alt="@monster.MonsterName" class="img-thumbnail" width="50" height="50" />
+                </button>
             }
         </div>
+
     </div>
 </div>
-
-<script>
-    function changeMonster(name, sprite) {
-        document.querySelector('.monster-display').style.backgroundImage = 'url(' + sprite + ')';
-        document.querySelector('.monster-image img').src = sprite;
-        document.querySelector('h3').innerText = name;
-    }
-</script>

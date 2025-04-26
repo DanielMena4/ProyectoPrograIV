@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ProyectoPrograIV.Data;
 using ProyectoPrograIV.Extensions;
@@ -38,6 +39,7 @@ public class GameController : Controller
             if (string.IsNullOrWhiteSpace(monsterName)) continue;
             var cleanedMonsterName = monsterName.Trim().ToLower();
             var monster = _context.Monsters
+                .Include(m => m.Moves)
                 .FirstOrDefault(m => m.MonsterName.ToLower().Trim() == cleanedMonsterName);
 
             if (monster != null)
@@ -64,14 +66,36 @@ public class GameController : Controller
 
     public IActionResult Battle()
     {
-        var selectedTeam = HttpContext.Session.GetObjectFromJson<Team>("SelectedTeam");
-
-        if (selectedTeam == null || selectedTeam.Monsters == null || !selectedTeam.Monsters.Any())
+        var team = HttpContext.Session.GetObjectFromJson<Team>("SelectedTeam");
+        if (team == null || team.Monsters == null || !team.Monsters.Any())
         {
             return RedirectToAction("Play");
         }
 
-        return View(selectedTeam);
+        var activeName = HttpContext.Session.GetString("ActiveMonsterName") ?? team.Monsters[0].MonsterName;
+        var activeMonster = team.Monsters.FirstOrDefault(m => m.MonsterName == activeName);
+
+        ViewData["ActiveMonsterName"] = activeMonster?.MonsterName;
+
+        return View(team);
+    }
+    public IActionResult ChangeMonster(string monsterName)
+    {
+        var selectedTeam = HttpContext.Session.GetObjectFromJson<Team>("SelectedTeam");
+
+        if (selectedTeam == null || !selectedTeam.Monsters.Any())
+        {
+            return RedirectToAction("Play");
+        }
+
+        var monster = selectedTeam.Monsters.FirstOrDefault(m => m.MonsterName == monsterName);
+
+        if (monster != null)
+        {
+            ViewData["ActiveMonsterName"] = monster.MonsterName;
+        }
+
+        return View("Battle", selectedTeam);
     }
 
 }
