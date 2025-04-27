@@ -56,6 +56,35 @@
     object-fit: cover;
     border-radius: 8px;
 }
+.battle-dialogbox {
+    width: 300px;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 10px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-height: 80%;
+    overflow-y: auto;
+    border-radius: 8px;
+}
+
+    .battle-dialogbox h4 {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+#battle-log {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+    #battle-log li {
+        padding: 5px 0;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
 .monster-button {
     border: none;
     background: transparent;
@@ -71,9 +100,49 @@
     }
 
     .monster-button.active-monster {
-        border: 2px solid #333;
-        opacity: 0.6;
+        border: 2px solid #ffcc00;
+        opacity: 1;
+        box-shadow: 0 0 10px rgba(255, 204, 0, 0.6); 
     }
+.health-bar-container {
+    width: 250px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+.health-bar {
+    background-color: #ccc;
+    border: 1px solid #888;
+    border-radius: 6px;
+    height: 20px;
+    width: 100%;
+    overflow: hidden;
+    box-shadow: inset 0 0 5px #00000044;
+}
+
+.health-bar-fill {
+    height: 100%;
+    transition: width 0.3s ease-in-out;
+}
+
+.health-green {
+    background: linear-gradient(to right, #4CAF50, #76FF03);
+}
+
+.health-yellow {
+    background: linear-gradient(to right, #FFEB3B, #FFC107);
+}
+
+.health-red {
+    background: linear-gradient(to right, #F44336, #E53935);
+}
+
+.health-text {
+    display: block;
+    margin-top: 5px;
+    font-weight: bold;
+    color: #333;
+}
 
 .attack-buttons {
     display: grid;

@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Resultado del Combate";
+    Layout = "~/Views/Shared/_SignedInLayout.cshtml";
+}
+
+<h1>Resultado del Combate</h1>
+@if (ViewBag.BattleResult == "win")
+{
+    <h2>¡Has ganado el combate!</h2>
+}
+else if (ViewBag.BattleResult == "lose")
+{
+    <h2>Has perdido el combate.</h2>
+}
+
+<a href="@Url.Action("Play", "Game")">
+    <button>Volver a jugar</button>
+
+</a>
