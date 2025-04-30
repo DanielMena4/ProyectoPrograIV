@@ -1,5 +1,4 @@
-﻿@using ProyectoPrograIV.ViewModels
-@model PlayViewModel
+﻿@model ProyectoPrograIV.ViewModels.PlayViewModel
 
 @{
     ViewData["Title"] = "Jugar";
@@ -9,12 +8,12 @@
 <div class="account-container">
     <div class="account-box">
         <h2 class="text-left mb-4">Jugar</h2>
-        <form method="post">
-            @for (int i = 1; i <= 6; i++)
+        <form method="post" asp-controller="Game" asp-action="Play">
+            @for (int i = 1; i <= 6; i++) 
             {
                 <div class="mb-3">
-                    <label for="Monster@i" class="form-label">Selecciona el Monstruo @i</label>
-                    <select class="selectpicker" data-live-search="true" aria-label="Monstruo @i" id="Monster@i" name="Monster@i">
+                    <label class="form-label">Selecciona el Monstruo @i</label>  
+                    <select class="selectpicker" data-live-search="true" name="MonsterNames[@(i-1)]" class="form-control">
                         @foreach (var monster in Model.Team)
                         {
                             <option value="@monster.MonsterName" data-content="<img src='@monster.Sprite' class='img-thumbnail' width='30'> @monster.MonsterName">
@@ -24,9 +23,11 @@
                     </select>
                 </div>
             }
+
             <div class="mt-4">
                 <button type="submit" class="btn btn-success w-100 p-2">Buscar Partida</button>
             </div>
         </form>
     </div>
 </div>
+

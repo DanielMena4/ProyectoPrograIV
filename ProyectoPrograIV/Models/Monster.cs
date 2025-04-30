@@ -10,11 +10,11 @@ namespace ProyectoPrograIV.Models
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
-        public string MonsterName { get; set; }
+        public string? MonsterName { get; set; }
         [Display(Name = "Tipo Primario")]
-        public string MonsterType1 { get; set; }
+        public string? MonsterType1 { get; set; }
         [Display(Name = "Tipo Secundario")]
-        public string MonsterType2 { get; set; }
+        public string? MonsterType2 { get; set; }
         [Display(Name = "Ataque")]
         public int MonsterAttack { get; set; }
         [Display(Name = "Ataque Especial")]
@@ -30,5 +30,7 @@ namespace ProyectoPrograIV.Models
         [Display(Name = "Vida Actual")]
         public int MonsterCurrentHealth { get; set; }
         public string? Sprite { get; set; }
+
+        public ICollection<Move> Moves { get; set; } = new List<Move>();
     }
 }

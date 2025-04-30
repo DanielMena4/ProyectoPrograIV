@@ -1,41 +1,123 @@
-﻿@model ProyectoPrograIV.Models.Team
+﻿@using Newtonsoft.Json;
+@using Microsoft.AspNetCore.Http
+@model (ProyectoPrograIV.Models.Team PlayerTeam, ProyectoPrograIV.Models.Team EnemyTeam)
 
 @{
     ViewData["Title"] = "Batalla";
     Layout = "~/Views/Shared/_SignedInLayout.cshtml";
+    var activeIndex = (int)(ViewData["ActiveInstanceId"] ?? 0);
+    var enemyIndex = (int)(ViewData["EnemyActiveIndex"] ?? 0);
+    var mainMonster = Model.PlayerTeam.Monsters[activeIndex];
+    var enemyMonster = Model.EnemyTeam.Monsters[enemyIndex];
+
 }
 
-<div class="battle-container">
-    <h2 class="text-center">¡Comienza la Batalla!</h2>
+<div class="account-container">
+    <div class="account-box">
+        <div class="battle-container">
 
-    @if (Model.Monsters != null && Model.Monsters.Count > 0)
-    {
-        <div class="monster-display" id="monsterDisplay" style="background-image: url('@Model.Monsters[0].Sprite');">
-            <div class="monster-image">
-                <img src="@Model.Monsters[0].Sprite" alt="@Model.Monsters[0].MonsterName" class="img-fluid" />
+            <div class="battle-arena">
+
+                <div class="monster-background player-monster">
+                    <div class="monster-display" style="background-image: url('@mainMonster.Sprite');">
+                        <div class="monster-image">
+                            <img src="@mainMonster.Sprite" alt="@mainMonster.MonsterName" />
+                        </div>
+                        <div class="health-bar-container">
+                            @{
+                                var healthPercentage = (int)((double)mainMonster.MonsterCurrentHealth / mainMonster.MonsterHealth * 100);
+                            }
+                            <div class="health-bar">
+                                <div class="health-bar-fill @((healthPercentage > 50) ? "health-green" : (healthPercentage > 20 ? "health-yellow" : "health-red"))"
+                                     style="width:@healthPercentage%;"></div>
+                            </div>
+                            <span class="health-text">@healthPercentage% - @mainMonster.MonsterCurrentHealth / @mainMonster.MonsterHealth</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="monster-background enemy-monster">
+                    <div class="monster-display" style="background-image: url('@enemyMonster.Sprite');">
+                        <div class="monster-image">
+                            <img src="@enemyMonster.Sprite" alt="@enemyMonster.MonsterName" />
+                        </div>
+                        <div class="health-bar-container">
+                            @{
+                                var enemyHealthPercentage = (int)((double)enemyMonster.MonsterCurrentHealth / enemyMonster.MonsterHealth * 100);
+                            }
+                            <div class="health-bar">
+                                <div class="health-bar-fill @((enemyHealthPercentage > 50) ? "health-green" : (enemyHealthPercentage > 20 ? "health-yellow" : "health-red"))"
+                                     style="width:@enemyHealthPercentage%;"></div>
+                            </div>
+                            <span class="health-text">@enemyHealthPercentage% - @enemyMonster.MonsterCurrentHealth / @enemyMonster.MonsterHealth</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 id="monster-name">@mainMonster.MonsterName</h3>
+
+            <div id="attack-buttons" class="attack-buttons">
+                @foreach (var move in mainMonster.Moves)
+                {
+                    <form method="post" action="@Url.Action("Attack", "Game")">
+                        <input type="hidden" name="moveId" value="@move.Id" />
+                        <button type="submit" class="attack-btn @move.Type.ToLower()">
+                            @move.Name
+                            <div class="move-tooltip">
+                                <strong>Tipo:</strong> @move.Type <br />
+                                <strong>Clase:</strong> @move.Class <br />
+                                <strong>Poder:</strong> @move.Power <br />
+                                <strong>Prioridad:</strong> @move.Priority
+                            </div>
+                        </button>
+                    </form>
+                }
             </div>
         </div>
 
-        <div class="monster-buttons mt-4 text-center">
-            @foreach (var monster in Model.Monsters.Skip(1)) // Saltamos el primer monstruo porque ya se está mostrando
+        <hr />
+
+        @{
+            var battleLog = ViewData["BattleLog"] as List<string> ?? new List<string>();
+        }
+        <div id="battle-dialogbox" class="battle-dialogbox">
+            <h4>Registro de Batalla</h4>
+            <ul id="battle-log">
+                @foreach (var log in battleLog)
+                {
+                    <li>@log</li>
+                }
+            </ul>
+        </div>
+
+        <div class="monster-buttons">
+            @foreach (var monster in Model.PlayerTeam.Monsters)
             {
-                <button class="btn btn-outline-primary monster-button" onclick="changeMonster('@monster.Sprite', '@monster.MonsterName')">
-                    <img src="@monster.Sprite" alt="@monster.MonsterName" class="img-thumbnail" width="50" />
+                var currentInstanceId = Model.PlayerTeam.Monsters.IndexOf(monster);
+                var isActive = currentInstanceId == activeIndex;
+                var isAlive = monster.MonsterCurrentHealth > 0; 
+
+                var buttonClass = "monster-button";
+                var onClick = $"location.href='{Url.Action("ChangeMonster", "Game", new { instanceId = currentInstanceId })}'";
+                var buttonStyle = isActive ? "active-monster" : "";
+
+                if (!isAlive)  
+                {
+                    buttonClass += " disabled";  
+                    onClick = "javascript:void(0);";  
+                }
+                else if (isActive)
+                {
+                    onClick = "javascript:void(0);";  
+                }
+
+                <button class="@buttonClass @buttonStyle" onclick="@onClick" @(isAlive ? "" : "disabled")>
+                    <img src="@monster.Sprite" alt="@monster.MonsterName" class="img-thumbnail" width="50" height="50" />
                 </button>
             }
         </div>
-    }
-    else
-    {
-        <p>No hay monstruos para mostrar.</p>
-    }
-</div>
+        </div>
 
-@section Scripts {
-    <script>
-        function changeMonster(spriteUrl, monsterName) {
-            document.getElementById('monsterDisplay').style.backgroundImage = "url('" + spriteUrl + "')";
-            document.querySelector('.monster-image img').src = spriteUrl;
-        }
-    </script>
-}
+    </div>
+</div>

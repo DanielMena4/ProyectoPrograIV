@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProyectoPrograIV.Data;
 
@@ -11,9 +12,11 @@ using ProyectoPrograIV.Data;
 namespace ProyectoPrograIV.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250424233301_ActualizacionMonstruos")]
+    partial class ActualizacionMonstruos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -155,21 +158,6 @@ namespace ProyectoPrograIV.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("MonsterMove", b =>
-                {
-                    b.Property<int>("MonstersId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MovesId")
-                        .HasColumnType("int");
-
-                    b.HasKey("MonstersId", "MovesId");
-
-                    b.HasIndex("MovesId");
-
-                    b.ToTable("MonsterMoves", (string)null);
-                });
-
             modelBuilder.Entity("ProyectoPrograIV.Models.Friendship", b =>
                 {
                     b.Property<int>("Id")
@@ -219,6 +207,7 @@ namespace ProyectoPrograIV.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MonsterName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MonsterSpecialAttack")
@@ -231,9 +220,11 @@ namespace ProyectoPrograIV.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MonsterType1")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MonsterType2")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sprite")
@@ -247,34 +238,6 @@ namespace ProyectoPrograIV.Migrations
                     b.HasIndex("TeamId");
 
                     b.ToTable("Monsters");
-                });
-
-            modelBuilder.Entity("ProyectoPrograIV.Models.Move", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Class")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Power")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Priority")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Moves");
                 });
 
             modelBuilder.Entity("ProyectoPrograIV.Models.Team", b =>
@@ -402,21 +365,6 @@ namespace ProyectoPrograIV.Migrations
                     b.HasOne("ProyectoPrograIV.Models.Users", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MonsterMove", b =>
-                {
-                    b.HasOne("ProyectoPrograIV.Models.Monster", null)
-                        .WithMany()
-                        .HasForeignKey("MonstersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ProyectoPrograIV.Models.Move", null)
-                        .WithMany()
-                        .HasForeignKey("MovesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
