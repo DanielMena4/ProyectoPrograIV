@@ -1,8 +1,61 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    .carousel-inner {
+        text-align: center;
+    }
+
+        .carousel-inner img {
+            max-width: 50%;
+            height: auto;
+            margin: 0 auto;
+        }
+
+    .carousel-caption-custom {
+        margin-top: 10px;
+        font-size: 1rem;
+        color: #333;
+        font-weight: 500;
+    }
+</style>
+
+
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel" data-interval="2000" data-wrap="true">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/Imagenes/Monstruos/Capibara/capibara_1.png" class="d-block w-60" src="..." alt="First slide">
+            <p class="carousel-caption-custom">Capibara</p>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Imagenes/Monstruos/Amaru/Amaru_1.png" class="d-block w-60" src="..." alt="Second slide">
+            <p class="carousel-caption-custom">Amaru</p>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Imagenes/Monstruos/Comburucho/comburucho_1.png" class="d-block w-60" src="..." alt="Third slide">
+            <p class="carousel-caption-custom">Comburucho</p>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Imagenes/Monstruos/DonGallon/DonGallon_1.png" class="d-block w-60" src="..." alt="Fourth slide">
+            <p class="carousel-caption-custom">DonGallon</p>
+        </div>
+         <div class="carousel-item">
+            <img src="~/Imagenes/Monstruos/Venus/venus_1.png" class="d-block w-60" src="..." alt="Fourth slide">
+            <p class="carousel-caption-custom">Venus</p>
+        </div>
+        <div class="carousel-item">
+            <img src="~/Imagenes/Monstruos/Volpaca/Volpaca_1.png" class="d-block w-60" src="..." alt="Fourth slide">
+            <p class="carousel-caption-custom">Volpaca</p>
+        </div>
+    </div>
+</div>
+
+    </a>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </div>
