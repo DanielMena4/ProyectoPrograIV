@@ -1,5 +1,5 @@
 ﻿.account-container {
-    background-image: url('../imagenes/fondo.jpg');
+    background-image: url('../imagenes/Fondo.jpeg');
     background-size: cover;
     background-position: center;
     background-repeat: repeat-y;
@@ -56,6 +56,7 @@
     object-fit: cover;
     border-radius: 8px;
 }
+
 .battle-dialogbox {
     width: 300px;
     background-color: #f4f4f4;
@@ -102,8 +103,9 @@
     .monster-button.active-monster {
         border: 2px solid #ffcc00;
         opacity: 1;
-        box-shadow: 0 0 10px rgba(255, 204, 0, 0.6); 
+        box-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
     }
+
 .health-bar-container {
     width: 250px;
     margin: 10px auto;
@@ -146,7 +148,7 @@
 
 .attack-buttons {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
     margin: 20px 0;
 }
@@ -191,110 +193,110 @@
 }
 
 
-    .attack-btn:hover .move-tooltip {
-        display: block;
-    }
+.attack-btn:hover .move-tooltip {
+    display: block;
+}
 
-    .attack-btn.normal {
-        background-color: #A8A77A;
-    }
+.attack-btn.normal {
+    background-color: #A8A77A;
+}
 
-    .attack-btn.fuego {
-        background-color: #EE8130;
-    }
+.attack-btn.fuego {
+    background-color: #EE8130;
+}
 
-    .attack-btn.agua {
-        background-color: #6390F0;
-    }
+.attack-btn.agua {
+    background-color: #6390F0;
+}
 
-    .attack-btn.hielo {
-        background-color: #96D9D6;
-    }
+.attack-btn.hielo {
+    background-color: #96D9D6;
+}
 
-    .attack-btn.electrico {
-        background-color: #F7D02C;
-    }
+.attack-btn.electrico {
+    background-color: #F7D02C;
+}
 
-    .attack-btn.dragon {
-        background-color: #6F35FC;
-    }
+.attack-btn.dragon {
+    background-color: #6F35FC;
+}
 
-    .attack-btn.psiquico {
-        background-color: #F95587;
-    }
+.attack-btn.psiquico {
+    background-color: #F95587;
+}
 
-    .attack-btn.siniestro {
-        background-color: #705746;
-    }
+.attack-btn.siniestro {
+    background-color: #705746;
+}
 
-    .attack-btn.volador {
-        background-color: #A98FF3;
-    }
+.attack-btn.volador {
+    background-color: #A98FF3;
+}
 
-    .attack-btn.fantasma {
-        background-color: #735797;
-    }
+.attack-btn.fantasma {
+    background-color: #735797;
+}
 
-    .attack-btn.lucha {
-        background-color: #C22E28;
-    }
+.attack-btn.lucha {
+    background-color: #C22E28;
+}
 
-    .attack-btn.roca {
-        background-color: #B6A136;
-    }
+.attack-btn.roca {
+    background-color: #B6A136;
+}
 
-    .attack-btn.tierra {
-        background-color: #E2BF65;
-    }
+.attack-btn.tierra {
+    background-color: #E2BF65;
+}
 
-    .attack-btn.normal:hover {
-        background-color: #92916D;
-    }
+.attack-btn.normal:hover {
+    background-color: #92916D;
+}
 
-    .attack-btn.fuego:hover {
-        background-color: #d46f1f;
-    }
+.attack-btn.fuego:hover {
+    background-color: #d46f1f;
+}
 
-    .attack-btn.agua:hover {
-        background-color: #527adc;
-    }
+.attack-btn.agua:hover {
+    background-color: #527adc;
+}
 
-    .attack-btn.hielo:hover {
-        background-color: #80c5c2;
-    }
+.attack-btn.hielo:hover {
+    background-color: #80c5c2;
+}
 
-    .attack-btn.electrico:hover {
-        background-color: #e1bb24;
-    }
+.attack-btn.electrico:hover {
+    background-color: #e1bb24;
+}
 
-    .attack-btn.dragon:hover {
-        background-color: #5e29d6;
-    }
+.attack-btn.dragon:hover {
+    background-color: #5e29d6;
+}
 
-    .attack-btn.psiquico:hover {
-        background-color: #df4a75;
-    }
+.attack-btn.psiquico:hover {
+    background-color: #df4a75;
+}
 
-    .attack-btn.siniestro:hover {
-        background-color: #5d483a;
-    }
+.attack-btn.siniestro:hover {
+    background-color: #5d483a;
+}
 
-    .attack-btn.volador:hover {
-        background-color: #9175d6;
-    }
+.attack-btn.volador:hover {
+    background-color: #9175d6;
+}
 
-    .attack-btn.fantasma:hover {
-        background-color: #624b7e;
-    }
+.attack-btn.fantasma:hover {
+    background-color: #624b7e;
+}
 
-    .attack-btn.lucha:hover {
-        background-color: #a62321;
-    }
+.attack-btn.lucha:hover {
+    background-color: #a62321;
+}
 
-    .attack-btn.roca:hover {
-        background-color: #9f902e;
-    }
+.attack-btn.roca:hover {
+    background-color: #9f902e;
+}
 
-    .attack-btn.tierra:hover {
-        background-color: #ccb35a;
-    }
+.attack-btn.tierra:hover {
+    background-color: #ccb35a;
+}
