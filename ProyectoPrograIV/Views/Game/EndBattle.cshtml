@@ -1,19 +1,30 @@
 ﻿@{
     ViewData["Title"] = "Resultado del Combate";
     Layout = "~/Views/Shared/_SignedInLayout.cshtml";
+    bool gano = ViewBag.PlayerWon == true;
 }
 
-<h1>Resultado del Combate</h1>
-@if (ViewBag.BattleResult == "win")
-{
-    <h2>¡Has ganado el combate!</h2>
-}
-else if (ViewBag.BattleResult == "lose")
-{
-    <h2>Has perdido el combate.</h2>
-}
+<div class="container mt-5 text-center">
+    <h1 class="display-4 mb-4 text-primary">Resultado del Combate</h1>
 
-<a href="@Url.Action("Play", "Game")">
-    <button>Volver a jugar</button>
+    @if (gano)
+    {
+        <div class="alert alert-success p-4 rounded shadow-sm">
+            <h2 class="text-success">
+                <i class="bi bi-trophy-fill"></i> ¡Has ganado el combate!
+            </h2>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-danger p-4 rounded shadow-sm">
+            <h2 class="text-danger">
+                <i class="bi bi-emoji-frown-fill"></i> Has perdido el combate.
+            </h2>
+        </div>
+    }
 
-</a>
+    <a href="@Url.Action("Play", "Game")" class="btn btn-outline-primary btn-lg mt-4">
+        <i class="bi bi-arrow-repeat"></i> Volver a jugar
+    </a>
+</div>
