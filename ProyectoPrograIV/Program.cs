@@ -26,6 +26,14 @@ builder.Services.AddIdentity<Users, IdentityRole>(options => {
 }).AddEntityFrameworkStores<AppDBContext>()
 .AddDefaultTokenProviders();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAllOrigins",
+        builder => builder.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader());
+});
+
 var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
@@ -36,6 +44,8 @@ using (var scope = app.Services.CreateScope())
 
     AppDbInitializer.Seed(context); 
 }
+
+app.UseCors("AllowAllOrigins");
 
 if (app.Environment.IsDevelopment())
 {
